@@ -62,27 +62,27 @@ class BTechSerializer(serializers.ModelSerializer):
                                      image=validated_data.get('image'))
         return btech
 
-    def update(self, validated_data, roll_no):
-        try:
-            btech = BTech.objects.get(
-                roll_no=roll_no)
-        except btech.DoesNotExist:
-            raise ValueError("Event doesn't exist with given id")
-        if validated_data.get('image'):
-            event.title = validated_data.get('title')
-        if validated_data.get('description'):
-            event.description = validated_data.get('description')
-        if validated_data.get('date'):
-            event.date = validated_data.get('date')
-        if validated_data.get('month'):
-            event.month = validated_data.get('month')
-        if validated_data.get('day'):
-            event.day = validated_data.get('day')
-        if validated_data.get('time'):
-            event.time = validated_data.get('time')
-        event.save(update_fields=[
-                   'title', 'description', 'date', 'month', 'day', 'time'])
-        return event
+    # def update(self, validated_data, roll_no):
+    #     try:
+    #         btech = BTech.objects.get(
+    #             roll_no=roll_no)
+    #     except btech.DoesNotExist:
+    #         raise ValueError("Event doesn't exist with given id")
+    #     if validated_data.get('image'):
+    #         event.title = validated_data.get('title')
+    #     if validated_data.get('description'):
+    #         event.description = validated_data.get('description')
+    #     if validated_data.get('date'):
+    #         event.date = validated_data.get('date')
+    #     if validated_data.get('month'):
+    #         event.month = validated_data.get('month')
+    #     if validated_data.get('day'):
+    #         event.day = validated_data.get('day')
+    #     if validated_data.get('time'):
+    #         event.time = validated_data.get('time')
+    #     event.save(update_fields=[
+    #                'title', 'description', 'date', 'month', 'day', 'time'])
+    #     return event
 
 
 class PhdSerializer(serializers.ModelSerializer):
