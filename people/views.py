@@ -1,5 +1,5 @@
 from rest_framework.views import APIView
-from .serializer import BTechSerializer, MTechSerializer, FacultySerializer, AlumniSerializer, PhdSerializer, StaffSerializer
+from .serializer import BTechSerializer, MSSerializer, MTechSerializer, FacultySerializer, AlumniSerializer, PhdSerializer, StaffSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from .models import BTech, Faculty, Staff, MTech, Alumni, Phd, MS
@@ -11,38 +11,22 @@ from PIL import Image
 
 from django.core.files import File
 from django.core.files.images import ImageFile
+from .helper import postDataForBulkPeople, convertToAlumni
 
+class PostPeopleData(APIView):
+    def post(self, request):
+        if request.method == "POST":
+            data = request.data
+            return Response(postDataForBulkPeople(data['img_dir_path'], data['csv_path'], data['people']), status=status.HTTP_201_CREATED)
+        return Response({"message": "{} method is not allowed".format(request.method)})
 
-# def btech():
-#     direct = os.listdir(r'D:\projects\ee-iiti\backend\ee\people\image')
-#     print(direct)
-#     df = pd.read_csv(r'D:\projects\ee-iiti\backend\ee\research\data.csv')
-#     roll_list = df.roll_no.tolist()
-#     for i in range(len(direct)):
-#         image_path = f"D://projects//ee-iiti//backend//ee//people//image//{direct[i]}"
-#         im = open(image_path, 'rb')
-#         django_file = File(im)
-#     #     # print(django_file)
-#         django_image_file = ImageFile(im)
-#         btech = BTech.objects.get(roll_no=roll_list[i])
-#         print("sfkshdkjhskfhdkusahd")
-#         btech.image.save(f'{roll_list[i]}.jpg', django_file, save=True)
-#     #     # print(btech.image)
-#         im.close()
-#         # obj = serializer.save(created_by=self.request.user) aise karrrr haaa ruk naaa
-#         btech.save(update_fields=['image'])
-
-
-# class PeopleView(APIView):
-#     def post(self, request):
-#         if request.method == "POST":
-#             serializer = PeopleSerializer(data=request.data)
-#             if serializer.is_valid():
-#                 data = serializer.create(request.data)
-#                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#         return Response({"message": "{} method is not allowed".format(request.method)})
-
+class ConvertToAlumni(APIView):
+    def post(self, request):
+        if request.method == "POST":
+            data = request.data
+            print(data)
+            return Response(convertToAlumni(data['year']), status=status.HTTP_201_CREATED)
+        return Response({"message": "{} method is not allowed".format(request.method)})
 
 class GetFacultyView(APIView):
     def get(self, request):

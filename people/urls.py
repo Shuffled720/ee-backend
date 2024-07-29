@@ -9,4 +9,6 @@ urlpatterns = [
     path('Staff/read', views.GetStaffView.as_view()),
     path('Faculty/read', views.GetFacultyView.as_view()),
     path('MS/read/<year>', views.GetMSByYear.as_view()),
+    path('bulk/create', views.PostPeopleData.as_view()),
+    path('convert/alumni', views.ConvertToAlumni.as_view()),
 ]
